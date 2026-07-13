@@ -1,11 +1,22 @@
-# 智驾时代：Agent进化简史
+# 📖 智驾时代：Agent进化简史
 
 > 从Prompt到自进化的AI驾驶之路
 > 作者：**Yason** · MindApex · VokoForge
 
+[![Stars](https://img.shields.io/github/stars/Madapexai/agent-evolution-book?style=social)](https://github.com/Madapexai/agent-evolution-book)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Language](https://img.shields.io/badge/lang-中文%20%7C%20English-blue)]()
+[![Chapters](https://img.shields.io/badge/chapters-18%20%2B%203%20appendices-orange)]()
+
+---
+
 ## 简介
 
 一辆从手摇启动到自动驾驶的进化之路。本书用自动驾驶的隐喻，将Agent从Prompt工程到Loop自进化的完整历程娓娓道来。每一章都是一个驾驶场景，让你在理解Agent的同时，也看到AI的"驾驶"技术如何一步步走向成熟。
+
+这本书不仅告诉你Agent是什么，更展示它们如何进化——从手摇启动的Prompt，到装上底盘的Harness系统，再到即将定义下一个软件工程时代的自驱动Loop。
+
+> 📖 [English README](README.md)
 
 ## 章节
 
@@ -40,9 +51,23 @@
 - 🏢 官网：[madapexai.com](https://www.madapexai.com/)
 - 📚 飞书知识库：[智驾时代：Agent进化简史](https://mindapex.feishu.cn/wiki/E7JmwiqTLiAiThkWNPccAS3DnRe)
 
+## 同系列书籍
+
+- 🤖 [给AI当老板：Agent作战团队](https://github.com/Madapexai/ai-agent-team-book) — 21章智能体团队实战手册
+- 🔄 [别调Prompt了，去写Loop](https://github.com/Madapexai/loop-engineering-book) — AI Agent时代的软件工程新范式
+
+## 作者
+
+**Yason** · 非典型程序员 / Agent 团队架构师
+
+过去，我通过管理团队来创造价值；如今，AI 正在重塑一切。管理的本质正在从「管人」转向「管 Agent」——以 Agent 为兵，以系统为阵，打造一支真正有战斗力的超级团队。
+
+- 博客：[blogs.yason.click](https://blogs.yason.click/)
+- 官网：[madapexai.com](https://www.madapexai.com/)
+
 ## 许可证
 
-MIT License
+[MIT License](LICENSE) — 自由使用、复制、修改和分发。
 
 ---
 
