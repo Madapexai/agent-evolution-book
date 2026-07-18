@@ -418,6 +418,162 @@ def fig_auto_org():
         inn += arrow(645 + i * 100, 382, 645 + i * 100, 428, "arG", 2)
     return wrap(w, h, inn)
 
+# ============================================================
+# 新增：架构图 Architecture & 流程图 Flowchart
+# ============================================================
+def fproc(x, y, w, h, label, sub=None, color=AMBER, tsize=15):
+    g = card(x, y, w, h, "rgba(255,255,255,0.05)", color, 12, 1.6)
+    g += txt(x + w / 2, y + h / 2 - (4 if sub else 0), label, tsize, WHITE, 700, "middle")
+    if sub:
+        g += txt(x + w / 2, y + h / 2 + 16, sub, 11, MUTED, 400, "middle")
+    return g
+
+def fdec(x, y, s, label, color=ORANGE, tsize=14):
+    pts = f"{x},{y-s} {x+s},{y} {x},{y+s} {x-s},{y}"
+    g = f'<polygon points="{pts}" fill="rgba(255,255,255,0.07)" stroke="{color}" stroke-width="2.2"/>'
+    g += txt(x, y + 5, label, tsize, WHITE, 700, "middle")
+    return g
+
+def fstart(x, y, w, h, label, color=GREEN):
+    g = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{h/2}" fill="{color}" opacity="0.18" stroke="{color}" stroke-width="2"/>'
+    g += txt(x + w / 2, y + h / 2 + 5, label, 15, WHITE, 700, "middle")
+    return g
+
+def fig_arch_system():
+    w, h = 980, 640
+    inn = ''
+    inn += txt(60, 56, "整体 Agent 系统架构：环境 → LLM → Harness → 执行", 23, WHITE, 800, "start", 0, -0.5)
+    inn += fproc(60, 100, 860, 70, "① 环境层 Environment", "用户 · 工具 · 数据 · 互联网", ORANGE, 17)
+    inn += arrow(490, 170, 490, 198, "ar", 2.5)
+    inn += fproc(340, 200, 300, 80, "② LLM 推理核心", "大模型大脑：理解 · 推理 · 生成", AMBER, 17)
+    inn += arrow(490, 280, 490, 308, "ar", 2.5)
+    inn += txt(60, 334, "③ Harness 五大子系统（整车安全系统）", 15, MUTED, 600)
+    subs = [("Context", ORANGE), ("Memory", AMBER), ("Tool", GREEN), ("Policy", ORANGE), ("Verification", GREEN)]
+    n = 5; bw = 164; gap = (860 - n * bw) / (n - 1); x0 = 60
+    for i, (t, c) in enumerate(subs):
+        x = x0 + i * (bw + gap)
+        inn += fproc(x, 348, bw, 86, t, None, c, 15)
+    inn += arrow(490, 434, 490, 462, "ar", 2.5)
+    inn += fproc(60, 464, 860, 70, "④ 执行环境 Runtime", "沙箱 · 权限隔离 · 资源限制 → 工具执行 / 动作落地", GREEN, 17)
+    inn += f'<rect x="44" y="192" width="892" height="356" rx="18" fill="none" stroke="{MUTED2}" stroke-width="1.3" stroke-dasharray="8 6" opacity="0.5"/>'
+    inn += txt(56, 210, "Harness 整车安全系统", 12, MUTED2, 600)
+    inn += (f'<path d="M 936 499 C 1000 499, 1000 135, 936 135" fill="none" stroke="url(#acc)" '
+            f'stroke-width="2.5" marker-end="url(#ar)" opacity="0.8"/>')
+    inn += txt(952, 320, "反馈闭环", 12, MUTED, 400, "middle")
+    inn += txt(60, 604, "输入从环境进入，经 LLM 推理、Harness 调度五大子系统，在执行环境中落地动作，结果再反馈回环境。", 13, MUTED, 400)
+    return wrap(w, h, inn)
+
+def fig_arch_toolcall():
+    w, h = 940, 520
+    inn = ''
+    inn += txt(60, 56, "工具调用架构：LLM 经 Router / MCP 路由调用工具", 22, WHITE, 800, "start", 0, -0.5)
+    inn += fproc(60, 200, 180, 96, "LLM 大脑", "决定调用哪个工具", ORANGE, 17)
+    inn += arrow(240, 248, 298, 248, "ar", 2.5)
+    inn += fproc(300, 200, 200, 96, "Tool Router", "MCP 协议 · 注册 / 路由", AMBER, 17)
+    tools = [("Search 搜索", ORANGE, 80), ("Code Exec 代码执行", GREEN, 200),
+             ("DB Query 数据库", AMBER, 320), ("API Call 接口", ORANGE, 440)]
+    for (t, c, y) in tools:
+        inn += arrow(500, 248, 598, y + 35, "ar", 2)
+        inn += fproc(600, y, 280, 70, t, None, c, 16)
+    inn += (f'<path d="M 600 390 C 470 430, 320 420, 250 320" fill="none" '
+            f'stroke="{MUTED2}" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arW)" opacity="0.6"/>')
+    inn += txt(360, 452, "结果回传 LLM", 12, MUTED2, 400, "middle")
+    inn += txt(60, 480, "LLM 决定动作 → Router 按 MCP 协议选定并调用工具 → 执行结果经 Router 回传 LLM，进入下一轮推理。", 13, MUTED, 400)
+    return wrap(w, h, inn)
+
+def fig_arch_multagent():
+    w, h = 940, 560
+    inn = ''
+    inn += txt(60, 56, "多智能体编排架构：协调者 + 共享总线 + Worker 池", 22, WHITE, 800, "start", 0, -0.5)
+    inn += fproc(320, 90, 300, 84, "Orchestrator 协调者", "分配 · 汇总 · 纠偏", ORANGE, 17)
+    inn += arrow(470, 174, 470, 202, "ar", 2.5)
+    inn += fproc(210, 204, 520, 60, "共享消息总线 / 全局记忆 Shared Bus", None, AMBER, 16)
+    workers = [("Planner 规划", GREEN, 70), ("Coder 编码", AMBER, 290),
+               ("Tester 测试", ORANGE, 510), ("Reviewer 审查", GREEN, 730)]
+    for (t, c, x) in workers:
+        inn += arrow(470, 264, x + 100, 322, "ar", 2)
+        inn += fproc(x, 324, 200, 96, t, None, c, 15)
+        inn += (f'<path d="M {x+100} 420 C {x+100} 470, 470 484, 470 268" fill="none" '
+                f'stroke="{MUTED2}" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#arW)" opacity="0.5"/>')
+    inn += txt(60, 510, "协调者把任务拆给各 Worker，Worker 经共享总线交换中间结果，最终由协调者汇总。自组织即在此涌现。", 13, MUTED, 400)
+    return wrap(w, h, inn)
+
+def fig_flow_task():
+    w, h = 820, 800
+    cx = 410
+    inn = ''
+    inn += txt(60, 52, "任务执行主流程：一个会自己转的闭环", 22, WHITE, 800, "start", 0, -0.5)
+    inn += fstart(cx - 90, 70, 180, 50, "接收任务", GREEN)
+    inn += arrow(cx, 120, cx, 140, "ar", 2.5)
+    inn += fproc(cx - 110, 140, 220, 54, "规划子任务", None, AMBER, 15)
+    inn += arrow(cx, 194, cx, 214, "ar", 2.5)
+    inn += fproc(cx - 110, 214, 220, 54, "思考：LLM 推理下一步", None, AMBER, 15)
+    inn += arrow(cx, 268, cx, 288, "ar", 2.5)
+    inn += fproc(cx - 110, 288, 220, 54, "选择并调用工具", None, ORANGE, 15)
+    inn += arrow(cx, 342, cx, 362, "ar", 2.5)
+    inn += fproc(cx - 110, 362, 220, 54, "执行动作 / 观察结果", None, ORANGE, 15)
+    inn += arrow(cx, 416, cx, 444, "ar", 2.5)
+    inn += fdec(cx, 474, 52, "完成?", ORANGE, 15)
+    inn += (f'<path d="M {cx-52} 474 C 215 474, 195 241, {cx-110} 241" fill="none" '
+            f'stroke="url(#acc)" stroke-width="2.4" marker-end="url(#ar)" opacity="0.85"/>')
+    inn += txt(195, 360, "否 ↺", 14, MUTED, 600, "middle")
+    inn += arrow(cx, 526, cx, 552, "ar", 2.5)
+    inn += fproc(cx - 90, 552, 180, 54, "验证结果", None, GREEN, 15)
+    inn += arrow(cx, 606, cx, 634, "ar", 2.5)
+    inn += fdec(cx, 664, 46, "通过?", GREEN, 15)
+    inn += fproc(cx + 72, 644, 150, 50, "修正 / 重试", None, ORANGE, 14)
+    inn += (f'<path d="M {cx+72} 669 C 300 706, 240 262, {cx-110} 241" fill="none" '
+            f'stroke="{ORANGE}" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arO)" opacity="0.7"/>')
+    inn += txt(cx + 150, 700, "否", 13, ORANGE, 600, "middle")
+    inn += arrow(cx, 710, cx, 736, "ar", 2.5)
+    inn += fstart(cx - 90, 736, 180, 50, "交付结果", GREEN)
+    return wrap(w, h, inn)
+
+def fig_flow_context_pipeline():
+    w, h = 860, 580
+    cx = 380
+    inn = ''
+    inn += txt(60, 52, "上下文工程流水线：给 LLM 喂对的料", 22, WHITE, 800, "start", 0, -0.5)
+    inn += fstart(cx - 110, 70, 220, 50, "原始信号", ORANGE)
+    inn += txt(cx, 100, "（对话 / 文件 / 工具结果）", 12, MUTED, 400, "middle")
+    inn += arrow(cx, 120, cx, 146, "ar", 2.5)
+    inn += fproc(cx - 110, 146, 220, 50, "① 采集 Collect", None, AMBER, 15)
+    inn += arrow(cx, 196, cx, 222, "ar", 2.5)
+    inn += fproc(cx - 110, 222, 220, 50, "② 筛选 Filter", "去噪 · 脱敏 · 截断", AMBER, 15)
+    inn += (f'<path d="M {cx+110} 247 C 620 247, 660 320, 660 352" fill="none" '
+            f'stroke="{MUTED2}" stroke-width="2" marker-end="url(#arW)" opacity="0.6"/>')
+    inn += txt(700, 322, "× 丢弃", 13, MUTED2, 600, "middle")
+    inn += txt(700, 342, "噪音 / 越权", 11, MUTED2, 400, "middle")
+    inn += arrow(cx, 272, cx, 298, "ar", 2.5)
+    inn += fproc(cx - 110, 298, 220, 50, "③ 压缩 Compress", "摘要 · 重排", GREEN, 15)
+    inn += arrow(cx, 348, cx, 374, "ar", 2.5)
+    inn += fproc(cx - 110, 374, 220, 50, "④ 注入 Inject", "送入 LLM 窗口", GREEN, 15)
+    inn += arrow(cx, 424, cx, 450, "ar", 2.5)
+    inn += fproc(cx - 110, 450, 220, 50, "⑤ 回收 Forget", "过期清理 · 记忆隔离", ORANGE, 15)
+    inn += txt(60, 542, "该透明的透明，该遮挡的遮挡——上下文工程就是给 AI 装一块“聪明的挡风玻璃”。", 13, MUTED, 400)
+    return wrap(w, h, inn)
+
+def fig_flow_verification():
+    w, h = 860, 660
+    cx = 360
+    inn = ''
+    inn += txt(60, 52, "验证流水线：一道道关，过不了就打回", 22, WHITE, 800, "start", 0, -0.5)
+    inn += fstart(cx - 100, 70, 200, 50, "Agent 产出", ORANGE)
+    gates = [("自动测试", ORANGE, 170), ("静态检查", AMBER, 270),
+             ("独立审查", GREEN, 370), ("人工审批", ORANGE, 470)]
+    prev_y = 120
+    for (t, c, y) in gates:
+        inn += arrow(cx, prev_y, cx, y - 46, "ar", 2.2)
+        inn += fdec(cx, y, 46, "通过?", c, 15)
+        inn += (f'<path d="M {cx-46} {y} C 150 {y}, 150 250, {cx-100} 95" fill="none" '
+                f'stroke="{c}" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arO)" opacity="0.55"/>')
+        inn += txt(120, y, "否→打回", 11, c, 600, "middle")
+        prev_y = y + 46
+    inn += arrow(cx, 516, cx, 560, "ar", 2.5)
+    inn += fstart(cx - 100, 560, 200, 50, "合并 / 上线", GREEN)
+    inn += txt(60, 630, "每一道关卡都过不了就打回重做——验证（Verification）是 Harness 质量的最后一道闸。", 13, MUTED, 400)
+    return wrap(w, h, inn)
+
 if __name__ == "__main__":
     save("fig_cover_car.svg", fig_cover_car())
     save("fig_five_generations.svg", fig_five_generations())
@@ -429,4 +585,11 @@ if __name__ == "__main__":
     save("fig_context_funnel.svg", fig_context_funnel())
     save("fig_chatbot_vs_agent.svg", fig_chatbot_vs_agent())
     save("fig_auto_org.svg", fig_auto_org())
+    # 新增：架构图 & 流程图
+    save("fig_arch_system.svg", fig_arch_system())
+    save("fig_arch_toolcall.svg", fig_arch_toolcall())
+    save("fig_arch_multagent.svg", fig_arch_multagent())
+    save("fig_flow_task.svg", fig_flow_task())
+    save("fig_flow_context_pipeline.svg", fig_flow_context_pipeline())
+    save("fig_flow_verification.svg", fig_flow_verification())
     print("DONE")

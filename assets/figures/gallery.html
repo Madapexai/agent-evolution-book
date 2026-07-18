@@ -58,9 +58,21 @@ const svgs = [
   "fig_react.svg",
   "fig_context_funnel.svg",
   "fig_chatbot_vs_agent.svg",
-  "fig_auto_org.svg"
+  "fig_auto_org.svg","fig_arch_system.svg","fig_arch_toolcall.svg","fig_arch_multagent.svg","fig_flow_task.svg","fig_flow_context_pipeline.svg","fig_flow_verification.svg"
 ];
 const titles = [
+["验证流水线关卡", "第 9 章", "#ff7043",
+   "自动测试→静态检查→独立审查→人工审批，每关不过就打回重做"],
+["上下文工程流水线", "第 5 章", "#ffa726",
+   "采集→筛选(去噪)→压缩→注入LLM→回收遗忘，带丢弃分支"],
+["任务执行主流程图", "第 4 章", "#66bb6a",
+   "接收→规划→思考(循环)→执行→验证→交付，菱形判断分支"],
+["多智能体编排架构", "第 1 章 / 第 16 章", "#ff7043",
+   "Orchestrator + 共享消息总线 + Worker 池，自组织在此涌现"],
+["工具调用架构 (MCP)", "第 4 章 / 第 8 章", "#66bb6a",
+   "LLM 决定动作 → MCP Router 路由 → 工具执行 → 结果回传 LLM"],
+["整体 Agent 系统架构", "第 4 章", "#ffa726",
+   "四层架构：环境→LLM→Harness 五大子系统→执行环境，反馈闭环"],
   ["智能车 = Agent · 英雄隐喻图", "序章 / 第 1 章", "#ff7043",
    "核心隐喻：Agent 就像一辆会自己开的智能车——LLM 是大脑，Harness 是整车安全系统。两者合起来，才是一辆能上路的完整车。"],
   ["五代演化高速路", "第 1 章 / 序章", "#ffa726",
