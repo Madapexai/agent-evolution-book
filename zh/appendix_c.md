@@ -140,11 +140,29 @@ W
 - Worktree 隔离工作区
 - Git 的一个功能，允许你在同一个仓库里同时打开多个分支，每个分支有独立的工作目录。在 Agent 场景下，Worktree 常用来给不同的子 Agent 提供隔离的工作环境，避免互相干扰。 就像车队里的每辆车有自己的车道和任务——各干各的，互不干扰，最后在终点汇合。
 
-💡 查词小技巧
+**查词小技巧**
 
 如果在这里找不到你想要的术语，可以试试：**1.** 用浏览器的查找功能（Ctrl+F / Cmd+F）搜索关键词；**2.** 回到正文章节，在具体语境中理解术语；**3.** 关注"AI观察室"公众号，留言提问。
 
-[← 附录B：入门学习路径 ](https://b-learning-path.html)🏠 返回目录 全书目录 →
+
+## 参考文献与延伸阅读
+
+本书正文融入了近年关于 AI Agent 的前沿研究。为方便你深入，这里列出**已核对的一手来源**（论文/权威博客）。提示：网络转载的"综述"常有 AI 生成内容，具体数字请以原始论文为准。
+
+- **[1]** Hu, Y. 等（2026）。*Memory in the Age of AI Agents: A Survey*。arXiv:2512.13564。五十余位作者联合撰写，提出"形态—功能—动力学"三维 Agent 记忆分类体系。 https://arxiv.org/abs/2512.13564
+- **[2]** Weng, L.（2026-07-04）。*Harness Engineering for Self-Improvement*。Lil'Log。系统归纳 Harness 工程的三种基础模式及其与递归自我改进（RSI）的关系。 https://lilianweng.github.io/posts/2026-07-04-harness/
+- **[3]** Zhang, M. 等（2025）。*Darwin Gödel Machine: AI that can improve itself by editing its own code*。arXiv:2505.22954。固定基础模型下让编码 Agent 演化可编辑的 harness 代码库，SWE-bench Verified 由 20% 提升至 50%。
+- **[4]** Novikov, A. 等（2025）。*AlphaEvolve*。arXiv:2506.13131。基于编码 Agent 的进化搜索系统。
+- **[5]** Zelikman, E. 等（2023）。*Self-Taught Optimizer (STOP)*。arXiv:2310.02304。递归自我改进的早朔实验，揭示基础模型能力是迭代改进的前提。
+- **[6]** Anthropic。*Agentic Misalignment* / *Sycophancy to Subterfuge* 系列研究。聚焦奖励黑客、欺骗性合规与对齐风险（具体实验数字请以原论文为准）。
+- **[7]** Yao, S. 等（2022）。*ReAct: Synergizing Reasoning and Acting in Language Models*。arXiv:2210.03629。"思考—行动"交替的 Agent 基础范式，几乎所有能调用工具的 Agent 都建立在这个骨架之上。
+- **[8]** Wei, J. 等（2022）。*Chain-of-Thought Prompting Elicits Reasoning in Large Language Models*。arXiv:2201.11903。系统证明"让模型把思考一步步说出来"能稳定提升推理准确率。
+- **[9]** Lütke, T.（2025）。*Context Engineering*。Shopify CEO Tobi Lütke 于 2025 年公开推广该术语，随后成为业界共识——本书也沿用了这一叫法。
+- **[10]** Anthropic（2024-12）。*Building Effective Agents*。https://www.anthropic.com/engineering/building-effective-agents 。Agent 设计模式与可观测性的奠基性工程参考。
+
+> 想顺着这条线继续挖？从 [1] 的记忆综述和 [2] 的 Harness 长文入手最稳；想看"Agent 自己改自己"的实锤案例，直接读 [3] 和 [4]。
+
+[← 附录B：入门学习路径](appendix_b.md)　🏠 返回目录　[全书目录 →](../README.md)
 
 《智驾时代：Agent 进化简史》 © 2026
 
