@@ -58,6 +58,11 @@ flowchart LR
 
 **这个转变，就是 Agent 的诞生。**
 
+![图：Agent = 一辆会自己开的智能车](assets/figures/fig_cover_car.svg)
+
+![图：五代演化——一条越来越智能的高速路](assets/figures/fig_five_generations.svg)
+
+
 ## 二、这不是科幻，这是正在发生的现实
 
 我知道你可能会想："说得这么玄乎，真的假的？"

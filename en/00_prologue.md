@@ -145,6 +145,10 @@ To make it click, I came up with a perfect analogy:
 
 **An Agent is a self-driving "smart car."**
 
+![Figure: Agent = A Self-Driving Smart Car](assets/figures/fig_cover_car.svg)
+
+![Figure: Five Generations of Evolution](assets/figures/fig_five_generations.svg)
+
 Wait — what do you mean?
 
 Hold on — that's exactly what Chapter 1 unpacks in detail. I'll leave you hanging for now. All I'll say is this: with the "smart car" metaphor, you'll grasp every core concept of an Agent at once — the brain, memory, context, tools, Harness, observability, self-evolution.

@@ -252,6 +252,7 @@
 - ✅ **第一、二部分正文页眉**：`zh/en` 的 Ch.1 加"第一部分·演化史 / Part One · Evolutionary History"，Ch.4 加"第二部分·架构详解 / Part Two · Architecture in Detail"，与第三、四部分页眉对齐（格式依序章路线图：第一部分=第 1–3 章、第二部分=第 4–7 章）
 - ✅ **第 1 章过渡句**：章末加"倒着拆车"说明，消解"五代时间线"与后续拆零件的顺序错位
 - ✅ **正文内联学术引用（P1 必补项）**：于 `zh/02·05`、`en/02·05`（ReAct[7]/CoT[8]）、`zh/01`·`en/01`（Context Engineering[9]）、`zh/09`·`en/09`（Anthropic《Building Effective Agents》[10]）补 4 类关键术语的原始出处，并在 `zh/en/appendix_c` 新增 `[7]–[10]` 参考文献条目（arXiv 已核对），与 `[1]–[6]` 前沿来源构成完整引用体系
+- ✅ **SVG 矢量插画体系（P0 视觉升级）**：用 HTML/SVG 生成 10 张核心概念矢量插画（非 Mermaid 文本框图），统一调性（深紫底 #1a0a2e + 橙→琥珀→绿渐变，与 banner.svg 一致）。产出文件：`assets/figures/fig_*.svg`（10 张，6–13KB/张），配套 `tools/gen_figures.py` 可重生成器、`assets/figures/gallery.html` 浏览器预览画廊。嵌入中英文章节共 **19 处引用**（覆盖 zh 7 章 / en 6 章），涵盖：智能车隐喻英雄图、五代演化高速路、Harness 五子系统(汽车部件类比)、七层纵深防护架构、三重悖论、Agent 永续循环、ReAct 推理行动交错、上下文工程漏斗、Chatbot vs Agent 本质对比、Auto-Organization 自组织车队
 
 **待作者决策（未自动改，属内容级判断）**
 - ✅ **英文版 `en/` 已平行补充"三重悖论"4 节 + 参考文献**：在 `en/04`(§4.7) / `en/06`(§6.7) / `en/16`(§9) / `en/18`(§18.9) 与 `en/appendix_c`(References and Further Reading) 补完对应英文版，复用同一套可核实引用 [1]–[6]，新增 4 个英文 Mermaid 图；en 全书 mermaid 134 → 138 块，全书合计 257 块，围栏校验全通过。⟵ 本轮已落地。

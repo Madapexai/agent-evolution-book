@@ -164,4 +164,8 @@ The main text weaves in recent frontier research on AI Agents. To go deeper, her
 
 The Self-Driving Era: A Brief History of Agent Evolution © 2026
 
+![Figure: Triple Paradox - Three Reverse Questions](assets/figures/fig_triple_paradox.svg)
+
+![Figure: Triple Paradox](assets/figures/fig_triple_paradox.svg)
+
 An evolutionary saga of AI Agents, from Prompt to self-evolving organizations

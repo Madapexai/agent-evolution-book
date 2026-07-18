@@ -166,4 +166,7 @@ W
 
 《智驾时代：Agent 进化简史》 © 2026
 
+![图：三重悖论——Agent 越强越要回答的三个"反过来"](assets/figures/fig_triple_paradox.svg)
+
+
 从 Prompt 到自进化组织，一部 AI 智能体的演化史诗
