@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520">
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="50%" style="stop-color:#2d1b4e"/>
+      <stop offset="100%" style="stop-color:#1a0a2e"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="50%" style="stop-color:#ffa726"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <linearGradient id="accV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffa726;stop-opacity:0.35"/>
+      <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffa726"/></marker>
+    <marker id="arO" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff7043"/></marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#66bb6a"/></marker>
+    <marker id="arW" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffffff"/></marker>
+  </defs>
+<rect width="920" height="520" rx="22" fill="url(#bg)"/>
+<text x="60" y="56" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="25" font-weight="800" fill="#ffffff" text-anchor="start" opacity="0" letter-spacing="-0.5">ReAct：推理与行动，像开车一样交替进行</text><rect x="70.0" y="180" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><rect x="70.0" y="180" width="120" height="5" rx="2.5" fill="#ffa726"/><text x="130.0" y="210" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">思考</text><text x="130.0" y="234" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">先看红绿灯</text><path d="M 190.0 220.0 C 136.0 220.0, 136.0 330.0, 202.0 330.0" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.85"/><rect x="202.0" y="290" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><rect x="202.0" y="290" width="120" height="5" rx="2.5" fill="#ff7043"/><text x="262.0" y="320" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">行动</text><text x="262.0" y="344" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">踩油门、变道</text><path d="M 322.0 330.0 C 268.0 330.0, 268.0 220.0, 334.0 220.0" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.85"/><rect x="334.0" y="180" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><rect x="334.0" y="180" width="120" height="5" rx="2.5" fill="#66bb6a"/><text x="394.0" y="210" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">观察</text><text x="394.0" y="234" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">车到哪了?</text><path d="M 454.0 220.0 C 400.0 220.0, 400.0 330.0, 466.0 330.0" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.85"/><rect x="466.0" y="290" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><rect x="466.0" y="290" width="120" height="5" rx="2.5" fill="#ffa726"/><text x="526.0" y="320" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">思考</text><text x="526.0" y="344" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">下一个路口</text><path d="M 586.0 330.0 C 532.0 330.0, 532.0 220.0, 598.0 220.0" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.85"/><rect x="598.0" y="180" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><rect x="598.0" y="180" width="120" height="5" rx="2.5" fill="#ff7043"/><text x="658.0" y="210" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">行动</text><text x="658.0" y="234" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">打方向转弯</text><path d="M 718.0 220.0 C 664.0 220.0, 664.0 330.0, 730.0 330.0" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.85"/><rect x="730.0" y="290" width="120" height="80" rx="14" ry="14" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><rect x="730.0" y="290" width="120" height="5" rx="2.5" fill="#66bb6a"/><text x="790.0" y="320" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">观察</text><text x="790.0" y="344" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">是否到位?</text><text x="60" y="480" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="400" fill="#b39ddb" text-anchor="start" opacity="1" letter-spacing="0">推理(Thought)与行动(Action)交织，观察(Observation)穿插其中——这就是 ReAct 模式。</text>
+<rect x="6" y="6" width="908" height="508" rx="18" fill="none" stroke="#7e57c2" stroke-width="1" opacity="0.5"/>
+<text x="904" y="506" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#7e57c2" text-anchor="end" opacity="0.8" letter-spacing="0">智驾时代 · Agent 进化简史</text>
+</svg>

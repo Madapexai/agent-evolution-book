@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 580" width="860" height="580">
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="50%" style="stop-color:#2d1b4e"/>
+      <stop offset="100%" style="stop-color:#1a0a2e"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="50%" style="stop-color:#ffa726"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <linearGradient id="accV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffa726;stop-opacity:0.35"/>
+      <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffa726"/></marker>
+    <marker id="arO" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff7043"/></marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#66bb6a"/></marker>
+    <marker id="arW" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffffff"/></marker>
+  </defs>
+<rect width="860" height="580" rx="22" fill="url(#bg)"/>
+<text x="60" y="52" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff" text-anchor="start" opacity="0" letter-spacing="-0.5">上下文工程流水线：给 LLM 喂对的料</text><rect x="270" y="70" width="220" height="50" rx="25.0" fill="#ff7043" opacity="0.18" stroke="#ff7043" stroke-width="2"/><text x="380.0" y="100.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">原始信号</text><text x="380" y="100" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">（对话 / 文件 / 工具结果）</text><line x1="380" y1="120" x2="380" y2="146" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="270" y="146" width="220" height="50" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><text x="380.0" y="171.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">① 采集 Collect</text><line x1="380" y1="196" x2="380" y2="222" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="270" y="222" width="220" height="50" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><text x="380.0" y="243.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">② 筛选 Filter</text><text x="380.0" y="263.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">去噪 · 脱敏 · 截断</text><path d="M 490 247 C 620 247, 660 320, 660 352" fill="none" stroke="#7e57c2" stroke-width="2" marker-end="url(#arW)" opacity="0.6"/><text x="700" y="322" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#7e57c2" text-anchor="middle" opacity="1" letter-spacing="0">× 丢弃</text><text x="700" y="342" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#7e57c2" text-anchor="middle" opacity="1" letter-spacing="0">噪音 / 越权</text><line x1="380" y1="272" x2="380" y2="298" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="270" y="298" width="220" height="50" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><text x="380.0" y="319.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">③ 压缩 Compress</text><text x="380.0" y="339.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">摘要 · 重排</text><line x1="380" y1="348" x2="380" y2="374" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="270" y="374" width="220" height="50" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><text x="380.0" y="395.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">④ 注入 Inject</text><text x="380.0" y="415.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">送入 LLM 窗口</text><line x1="380" y1="424" x2="380" y2="450" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="270" y="450" width="220" height="50" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><text x="380.0" y="471.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">⑤ 回收 Forget</text><text x="380.0" y="491.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">过期清理 · 记忆隔离</text><text x="60" y="542" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="400" fill="#b39ddb" text-anchor="start" opacity="1" letter-spacing="0">该透明的透明，该遮挡的遮挡——上下文工程就是给 AI 装一块“聪明的挡风玻璃”。</text>
+<rect x="6" y="6" width="848" height="568" rx="18" fill="none" stroke="#7e57c2" stroke-width="1" opacity="0.5"/>
+<text x="844" y="566" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#7e57c2" text-anchor="end" opacity="0.8" letter-spacing="0">智驾时代 · Agent 进化简史</text>
+</svg>

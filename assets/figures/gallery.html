@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智驾时代 · Agent 进化简史 — SVG 插画画廊</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0d071c; color: #e8dff0; line-height:1.6;
+    padding: 40px 24px 80px;
+  }
+  h1 {
+    text-align: center; font-size: 32px; font-weight:800;
+    background: linear-gradient(90deg, #ff7043, #ffa726, #66bb6a);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    margin-bottom:6px;
+  }
+  .sub { text-align:center; color:#b39ddb; font-size:15px; margin-bottom:48px; }
+  .grid { display:flex; flex-direction:column; gap:56px; max-width:1100px; margin:0 auto; }
+  .fig-card { background:#15102f; border-radius:20px; overflow:hidden; border:1px solid rgba(115,91,194,0.25); box-shadow:0 12px 40px rgba(0,0,0,0.45); }
+  .fig-header { padding:22px 28px 14px; border-bottom:1px solid rgba(115,91,194,0.15); display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .fig-num { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0; }
+  .fig-title { font-size:20px; font-weight:700; }
+  .fig-chap { font-size:13px; color:#b39ddb; margin-left:auto; opacity:0.85; }
+  .fig-body { padding:20px 28px 28px; display:flex; justify-content:center; align-items:center; min-height:200px; }
+  .fig-body svg { max-width:100%; height:auto; border-radius:12px; }
+  .fig-desc { padding:0 28px 22px; font-size:14px; color:#b39ddb; line-height:1.65; }
+  .tag { display:inline-block; padding:2px 9px; border-radius:5px; font-size:11px; font-weight:700; letter-spacing:0.4px; }
+</style>
+</head>
+<body>
+<h1>智驾时代 · 插画画廊</h1>
+<p class="sub">Agent Evolution Book — Vector Illustrations Gallery<br><span style="opacity:0.55;font-size:13px;">用 HTML/SVG 生成的矢量插画（非 Mermaid 文本框图）</span></p>
+<div class="grid">
+
+<!-- 01 -->
+<div class="fig-card">
+<div class="fig-header"><div class="fig-num" style="background:linear-gradient(135deg,#ff7043,#ffa726);color:#fff;">01</div>
+<span class="fig-title">智能车 = Agent · 英雄隐喻图</span>
+<span class="fig-chap">序章 / 第 1 章</span></div>
+<div class="fig-body">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520"></svg><!-- inline below -->
+</div>
+<div class="fig-desc">核心隐喻：Agent 就像一辆会自己开的智能车——LLM 是大脑（理解/推理/生成），Harness 是整车安全系统（记忆·工具·上下文·权限·验证·治理）。两者合起来，才是一辆能上路的完整车。</div>
+</div>
+
+<script>
+// Inline each SVG to avoid CORS issues
+const svgs = [
+  "fig_cover_car.svg",
+  "fig_five_generations.svg",
+  "fig_harness_5subs.svg",
+  "fig_harness_7layers.svg",
+  "fig_triple_paradox.svg",
+  "fig_agent_loop.svg",
+  "fig_react.svg",
+  "fig_context_funnel.svg",
+  "fig_chatbot_vs_agent.svg",
+  "fig_auto_org.svg","fig_arch_system.svg","fig_arch_toolcall.svg","fig_arch_multagent.svg","fig_flow_task.svg","fig_flow_context_pipeline.svg","fig_flow_verification.svg"
+];
+const titles = [
+["验证流水线关卡", "第 9 章", "#ff7043",
+   "自动测试→静态检查→独立审查→人工审批，每关不过就打回重做"],
+["上下文工程流水线", "第 5 章", "#ffa726",
+   "采集→筛选(去噪)→压缩→注入LLM→回收遗忘，带丢弃分支"],
+["任务执行主流程图", "第 4 章", "#66bb6a",
+   "接收→规划→思考(循环)→执行→验证→交付，菱形判断分支"],
+["多智能体编排架构", "第 1 章 / 第 16 章", "#ff7043",
+   "Orchestrator + 共享消息总线 + Worker 池，自组织在此涌现"],
+["工具调用架构 (MCP)", "第 4 章 / 第 8 章", "#66bb6a",
+   "LLM 决定动作 → MCP Router 路由 → 工具执行 → 结果回传 LLM"],
+["整体 Agent 系统架构", "第 4 章", "#ffa726",
+   "四层架构：环境→LLM→Harness 五大子系统→执行环境，反馈闭环"],
+  ["智能车 = Agent · 英雄隐喻图", "序章 / 第 1 章", "#ff7043",
+   "核心隐喻：Agent 就像一辆会自己开的智能车——LLM 是大脑，Harness 是整车安全系统。两者合起来，才是一辆能上路的完整车。"],
+  ["五代演化高速路", "第 1 章 / 序章", "#ffa726",
+   "从 Prompt 到 Auto-Organization，五代演进如同一条越来越智能的高速路。每代都解锁了新的能力维度。"],
+  ["Harness 五大子系统", "第 4 章", "#66bb6a",
+   "Context（前挡风玻璃）、Memory/RAG（导航+记录仪）、Tool（机械手）、Policy（刹车）、Verification（年检）——五大子系统让 AI 可靠干活。"],
+  ["Harness 七层架构（纵深防护）", "第 9 章", "#ff7043",
+   "从 L1 执行环境到 L7 治理，七层架构是一套完整的纵深防护体系。越往下越基础，越往上越高级。"],
+  ["三重悖论", "附录 C", "#ffa726",
+   "记忆悖论、推理悖论、进化悖论——Agent 越强，这三个“反过来”的问题就越要回答。"],
+  ["Agent Loop 永续循环", "第 4-6 章", "#66bb6a",
+   "观察 → 思考 → 行动 → 再观察。转起来的闭环才是真正的 Agent，而不是一次性的问答。"],
+  ["ReAct 推理与行动交错", "第 2 章", "#ff7043",
+   "Thought → Action → Observation → Thought… 像开车一样交替进行推理和行动。这是许多 Agent 框架的基础模式。"],
+  ["上下文工程漏斗", "第 5 章", "#ffa726",
+   "原始信息 → 挡风玻璃筛选/遮挡 → 压缩后送入 LLM 窗口。给 AI 装一块“聪明的挡风玻璃”。"],
+  ["Chatbot vs Agent 本质对比", "第 1 章", "#66bb6a",
+   "Chatbot 问→答→停（没有手脚）。Agent 问→想→做→看（闭环驱动、真去执行）。差的不只是“会不会做”。"],
+  ["Auto-Organization 自组织车队", "第 16 章", "#ffa726",
+   "从一盘散沙的零散 Agent 到协同进化的组织体。自组织带来能力跃迁，也带来治理新课题。"]
+];
+(async () => {
+  for (let i = 0; i < svgs.length; i++) {
+    const resp = await fetch(svgs[i]);
+    const txt = await resp.text();
+    const card = document.querySelectorAll('.fig-card')[i];
+    const body = card.querySelector('.fig-body');
+    // replace empty svg with actual content
+    const placeholder = body.querySelector('svg');
+    if (placeholder) {
+      const div = document.createElement('div');
+      div.innerHTML = txt;
+      div.querySelector('svg').style.maxWidth='100%';
+      div.querySelector('svg').style.height='auto';
+      div.querySelector('svg').style.borderRadius='12px';
+      body.replaceChild(div, body.firstChild);
+    }
+    // set colors
+    const [t, chap, c, d] = titles[i];
+    const numEl = card.querySelector('.fig-num');
+    numEl.style.background=`linear-gradient(135deg,${c},${c}88)`;
+    card.querySelector('.fig-title').textContent=t;
+    card.querySelector('.fig-chap').textContent=chap;
+    card.querySelector('.fig-desc').textContent=d;
+  }
+})();
+</script>
+
+</div>
+</body>
+</html>

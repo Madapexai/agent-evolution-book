@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" width="980" height="640">
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="50%" style="stop-color:#2d1b4e"/>
+      <stop offset="100%" style="stop-color:#1a0a2e"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="50%" style="stop-color:#ffa726"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <linearGradient id="accV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7043"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffa726;stop-opacity:0.35"/>
+      <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffa726"/></marker>
+    <marker id="arO" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff7043"/></marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#66bb6a"/></marker>
+    <marker id="arW" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffffff"/></marker>
+  </defs>
+<rect width="980" height="640" rx="22" fill="url(#bg)"/>
+<text x="60" y="56" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="23" font-weight="800" fill="#ffffff" text-anchor="start" opacity="0" letter-spacing="-0.5">整体 Agent 系统架构：环境 → LLM → Harness → 执行</text><rect x="60" y="100" width="860" height="70" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><text x="490.0" y="131.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">① 环境层 Environment</text><text x="490.0" y="151.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">用户 · 工具 · 数据 · 互联网</text><line x1="490" y1="170" x2="490" y2="198" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="340" y="200" width="300" height="80" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><text x="490.0" y="236.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">② LLM 推理核心</text><text x="490.0" y="256.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">大模型大脑：理解 · 推理 · 生成</text><line x1="490" y1="280" x2="490" y2="308" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><text x="60" y="334" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="600" fill="#b39ddb" text-anchor="start" opacity="1" letter-spacing="0">③ Harness 五大子系统（整车安全系统）</text><rect x="60.0" y="348" width="164" height="86" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><text x="142.0" y="391.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">Context</text><rect x="234.0" y="348" width="164" height="86" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ffa726" stroke-width="1.6" opacity="1"/><text x="316.0" y="391.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">Memory</text><rect x="408.0" y="348" width="164" height="86" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><text x="490.0" y="391.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">Tool</text><rect x="582.0" y="348" width="164" height="86" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#ff7043" stroke-width="1.6" opacity="1"/><text x="664.0" y="391.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">Policy</text><rect x="756.0" y="348" width="164" height="86" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><text x="838.0" y="391.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">Verification</text><line x1="490" y1="434" x2="490" y2="462" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.9"/><rect x="60" y="464" width="860" height="70" rx="12" ry="12" fill="rgba(255,255,255,0.05)" stroke="#66bb6a" stroke-width="1.6" opacity="1"/><text x="490.0" y="495.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1" letter-spacing="0">④ 执行环境 Runtime</text><text x="490.0" y="515.0" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">沙箱 · 权限隔离 · 资源限制 → 工具执行 / 动作落地</text><rect x="44" y="192" width="892" height="356" rx="18" fill="none" stroke="#7e57c2" stroke-width="1.3" stroke-dasharray="8 6" opacity="0.5"/><text x="56" y="210" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" font-weight="600" fill="#7e57c2" text-anchor="start" opacity="1" letter-spacing="0">Harness 整车安全系统</text><path d="M 936 499 C 1000 499, 1000 135, 936 135" fill="none" stroke="url(#acc)" stroke-width="2.5" marker-end="url(#ar)" opacity="0.8"/><text x="952" y="320" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" font-weight="400" fill="#b39ddb" text-anchor="middle" opacity="1" letter-spacing="0">反馈闭环</text><text x="60" y="604" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="400" fill="#b39ddb" text-anchor="start" opacity="1" letter-spacing="0">输入从环境进入，经 LLM 推理、Harness 调度五大子系统，在执行环境中落地动作，结果再反馈回环境。</text>
+<rect x="6" y="6" width="968" height="628" rx="18" fill="none" stroke="#7e57c2" stroke-width="1" opacity="0.5"/>
+<text x="964" y="626" font-family="Inter, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11" font-weight="400" fill="#7e57c2" text-anchor="end" opacity="0.8" letter-spacing="0">智驾时代 · Agent 进化简史</text>
+</svg>

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="《智驾时代：Agent 进化简史》— 从 Prompt 到自进化，用智能车的比喻讲透 AI Agent 的演化史诗。开源免费，中英双语。">
+<title>智驾时代：Agent 进化简史 — The Self-Driving Era</title>
+<!-- Google Fonts removed — using system font stack for reliability in headless environments -->
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-deep:#1a0a2e;--bg-mid:#2d1b4e;--bg-card:#15102f;
+  --accent-red:#ff7043;--accent-amber:#ffa726;--accent-green:#66bb6a;
+  --text-primary:#ffffff;--text-secondary:#b39ddb;--text-tertiary:#7e57c2;--text-muted:#5e35b1;
+  --border-subtle:rgba(115,91,194,0.25);--border-strong:rgba(126,87,194,0.5);
+  --shadow-card:0 12px 40px rgba(0,0,0,0.45);
+  --radius-lg:20px;--radius-md:14px;--radius-sm:10px;
+  --gradient-accent:linear-gradient(90deg,var(--accent-red),var(--accent-amber),var(--accent-green));
+  --gradient-bg:linear-gradient(135deg,var(--bg-deep),var(--bg-mid),var(--bg-deep));
+  --font-heading:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:var(--gradient-bg);z-index:-2}
+/* Force text visibility — GSAP will override with inline styles after load */
+.hero-title,.hero-subtitle,.hero-en,.hero-tagline,.hero-author,.section-title,.section-label,.section-subtitle,.cta-btn,.bento-card h3,.bento-card p,.gen-card .gen-num,.gen-card .gen-name,.gen-card .gen-desc,.formula,.traffic-card h3,.traffic-card p,.paradox-card h3,.paradox-card p,.chapter-part h3,.chapter-part .ch-list li,.author-text p,.cta-text,.footer-brand h4,.footer-brand p,.footer-links a,.footer-copy{opacity:1!important;visibility:visible!important}
+section{position:relative;padding:100px 24px;max-width:1400px;margin:0 auto}
+@media(min-width:768px){section{padding:140px 48px}}
+@media(min-width:1024px){section{padding:180px 64px}}
+
+.grid-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:.04}
+.grid-bg line{stroke:#fff;stroke-width:1}
+
+.section-label{display:inline-block;font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-amber);margin-bottom:16px}
+.section-title{font-family:var(--font-heading);font-size:clamp(36px,6vw,64px);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:20px}
+.section-subtitle{font-family:var(--font-body);font-size:clamp(16px,2vw,20px);color:var(--text-secondary);max-width:600px;line-height:1.7}
+
+.accent-bar{width:60px;height:4px;background:var(--gradient-accent);border-radius:2px;margin-bottom:32px}
+
+/* Navigation Dots */
+.nav-dots{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:16px}
+@media(max-width:767px){.nav-dots{display:none}}
+.nav-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--text-tertiary);cursor:pointer;transition:all .3s}
+.nav-dot.active{background:var(--accent-amber);border-color:var(--accent-amber);box-shadow:0 0 12px rgba(255,167,38,.5)}
+.nav-dot:hover{border-color:var(--accent-amber)}
+
+/* Hero */
+.hero{display:flex;align-items:center;min-height:100vh;padding-top:0;padding-bottom:0;overflow:hidden}
+.hero-inner{display:flex;flex-direction:column;align-items:flex-start;gap:48px;width:100%;position:relative;z-index:2}
+@media(min-width:1024px){.hero-inner{flex-direction:row;align-items:center;justify-content:space-between}}
+.hero-text{flex:1;max-width:700px}
+.hero-title{font-family:var(--font-heading);font-size:clamp(48px,8vw,96px);font-weight:900;letter-spacing:-.04em;line-height:.95;margin-bottom:8px}
+.hero-title .gradient{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-subtitle{font-family:var(--font-heading);font-size:clamp(24px,4vw,48px);font-weight:700;color:var(--text-secondary);margin-bottom:16px;letter-spacing:-.02em}
+.hero-en{font-family:var(--font-heading);font-size:clamp(16px,2.5vw,24px);font-weight:300;color:var(--text-tertiary);font-style:italic;margin-bottom:24px}
+.hero-tagline{font-size:clamp(16px,2vw,20px);color:var(--text-secondary);margin-bottom:8px}
+.hero-author{font-size:14px;color:var(--text-muted);margin-bottom:40px;letter-spacing:.04em}
+.hero-visual{flex:0 0 auto;width:100%;max-width:560px;position:relative}
+@media(max-width:1023px){.hero-visual{max-width:100%;margin-top:24px}}
+.hero-visual img{width:100%;height:auto;display:block}
+
+.cta-btn{display:inline-flex;align-items:center;gap:12px;padding:16px 36px;background:var(--gradient-accent);border:none;border-radius:40px;color:#15101f;font-family:var(--font-heading);font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cta-btn:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(255,167,38,.35)}
+.cta-btn svg{width:18px;height:18px}
+
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:12px;font-family:var(--font-heading);letter-spacing:.15em;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* Concentric decoration */
+.concentric{position:absolute;pointer-events:none;opacity:.12}
+.concentric circle{fill:none;stroke:var(--accent-amber);stroke-width:1.5;stroke-dasharray:8 6}
+.concentric.top-right{top:-100px;right:-100px}
+.concentric.bottom-left{bottom:-100px;left:-100px}
+
+/* Bento Grid */
+.bento-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:48px}
+@media(min-width:768px){.bento-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.bento-grid{grid-template-columns:repeat(3,1fr)}}
+.bento-card{background:rgba(255,255,255,.035);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:32px 28px;transition:transform .3s,border-color .3s;position:relative;overflow:hidden}
+.bento-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--gradient-accent);border-radius:4px 4px 0 0}
+.bento-card:hover{transform:translateY(-4px);border-color:var(--border-strong)}
+.bento-card .card-icon{width:40px;height:40px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,167,38,.1)}
+.bento-card h3{font-family:var(--font-heading);font-size:20px;font-weight:700;margin-bottom:10px;color:var(--text-primary)}
+.bento-card p{font-size:15px;color:var(--text-secondary);line-height:1.65}
+.bento-card.quote{background:rgba(255,167,38,.06);border-color:rgba(255,167,38,.2)}
+.bento-card.quote p{font-size:18px;font-style:italic;color:var(--accent-amber)}
+
+/* 5 Gen Cards */
+.gen-section{position:relative}
+.gen-cards{display:flex;flex-direction:column;gap:24px;margin-top:48px}
+@media(min-width:1024px){.gen-cards{gap:32px}}
+.gen-card{display:flex;gap:24px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:36px 32px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+.gen-card:hover{border-color:var(--border-strong)}
+.gen-card .gen-num{font-family:var(--font-heading);font-size:clamp(48px,8vw,72px);font-weight:900;line-height:1;opacity:.15;flex-shrink:0;width:80px;text-align:center}
+.gen-card:nth-child(1) .gen-num{color:var(--accent-red)}
+.gen-card:nth-child(2) .gen-num{color:var(--accent-red)}
+.gen-card:nth-child(3) .gen-num{color:var(--accent-amber)}
+.gen-card:nth-child(4) .gen-num{color:var(--accent-amber)}
+.gen-card:nth-child(5) .gen-num{color:var(--accent-green)}
+.gen-card .gen-info{flex:1}
+.gen-card .gen-name{font-family:var(--font-heading);font-size:clamp(18px,2.5vw,24px);font-weight:700;margin-bottom:6px}
+.gen-card .gen-years{font-size:13px;color:var(--text-muted);font-family:var(--font-heading);letter-spacing:.08em;margin-bottom:10px}
+.gen-card .gen-desc{font-size:15px;color:var(--text-secondary);line-height:1.7}
+.gen-card::after{content:'';position:absolute;left:0;top:0;width:4px;height:100%;border-radius:2px}
+.gen-card:nth-child(1)::after{background:var(--accent-red)}
+.gen-card:nth-child(2)::after{background:var(--accent-red)}
+.gen-card:nth-child(3)::after{background:var(--accent-amber)}
+.gen-card:nth-child(4)::after{background:var(--accent-green)}
+.gen-card:nth-child(5)::after{background:var(--accent-green)}
+
+/* Core Formula */
+.formula-section{text-align:center}
+.formula{font-family:var(--font-heading);font-size:clamp(32px,6vw,72px);font-weight:900;letter-spacing:-.03em;margin:48px 0 64px;line-height:1.2}
+.formula .eq{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.traffic-lights{display:grid;grid-template-columns:1fr;gap:24px;margin-top:48px}
+@media(min-width:768px){.traffic-lights{grid-template-columns:repeat(3,1fr)}}
+.traffic-card{background:rgba(255,255,255,.035);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:40px 28px;text-align:center;position:relative}
+.traffic-card .light{width:56px;height:56px;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;font-family:var(--font-heading)}
+.traffic-card:nth-child(1) .light{background:rgba(255,112,67,.2);color:var(--accent-red);box-shadow:0 0 30px rgba(255,112,67,.3)}
+.traffic-card:nth-child(2) .light{background:rgba(255,167,38,.2);color:var(--accent-amber);box-shadow:0 0 30px rgba(255,167,38,.3)}
+.traffic-card:nth-child(3) .light{background:rgba(102,187,106,.2);color:var(--accent-green);box-shadow:0 0 30px rgba(102,187,106,.3)}
+.traffic-card h3{font-family:var(--font-heading);font-size:20px;font-weight:700;margin-bottom:12px}
+.traffic-card p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.formula-viz{margin-top:48px;display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.formula-viz{grid-template-columns:repeat(2,1fr)}}
+.formula-viz img{width:100%;height:auto;border-radius:var(--radius-md);border:1px solid var(--border-subtle)}
+
+/* Triple Paradox */
+.paradox-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:48px}
+@media(min-width:768px){.paradox-grid{grid-template-columns:repeat(3,1fr)}}
+.paradox-card{background:rgba(255,255,255,.035);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:36px 28px;position:relative;transition:transform .3s}
+.paradox-card:hover{transform:translateY(-4px)}
+.paradox-card .p-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:22px}
+.paradox-card:nth-child(1) .p-icon{background:rgba(255,112,67,.15);color:var(--accent-red)}
+.paradox-card:nth-child(2) .p-icon{background:rgba(255,167,38,.15);color:var(--accent-amber)}
+.paradox-card:nth-child(3) .p-icon{background:rgba(102,187,106,.15);color:var(--accent-green)}
+.paradox-card h3{font-family:var(--font-heading);font-size:20px;font-weight:700;margin-bottom:10px}
+.paradox-card .p-tag{font-size:12px;font-family:var(--font-heading);letter-spacing:.1em;color:var(--text-muted);margin-bottom:14px}
+.paradox-card p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+/* Gallery */
+.gallery-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:48px}
+@media(min-width:768px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.gallery-grid{grid-template-columns:repeat(4,1fr)}}
+.gallery-item{background:rgba(255,255,255,.025);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:12px;cursor:pointer;transition:transform .2s,border-color .2s}
+.gallery-item:hover{transform:scale(1.02);border-color:var(--border-strong)}
+.gallery-item img{width:100%;height:auto;display:block;border-radius:6px}
+.gallery-item .fig-label{font-size:11px;color:var(--text-muted);margin-top:8px;font-family:var(--font-heading);letter-spacing:.04em}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:999;justify-content:center;align-items:center;cursor:pointer}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain}
+.lightbox-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lightbox-close:hover{background:rgba(255,255,255,.2)}
+
+/* Chapter Map */
+.chapter-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:48px}
+@media(min-width:768px){.chapter-grid{grid-template-columns:repeat(2,1fr)}}
+.chapter-part{background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:32px 28px}
+.chapter-part .part-num{font-family:var(--font-heading);font-size:48px;font-weight:900;opacity:.12;margin-bottom:-20px}
+.chapter-part h3{font-family:var(--font-heading);font-size:20px;font-weight:700;margin-bottom:6px}
+.chapter-part .part-en{font-size:13px;color:var(--text-muted);margin-bottom:18px;font-family:var(--font-heading)}
+.chapter-part .ch-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.chapter-part .ch-list li{font-size:14px;color:var(--text-secondary);display:flex;gap:8px}
+.chapter-part .ch-list li .ch-num{color:var(--accent-amber);font-family:var(--font-heading);font-weight:600;min-width:24px}
+.appendices{grid-column:1/-1;display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.appendices{grid-template-columns:repeat(3,1fr)}}
+.appendix-card{background:rgba(255,255,255,.02);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:20px;text-align:center}
+.appendix-card h4{font-family:var(--font-heading);font-size:15px;font-weight:600;margin-bottom:4px}
+.appendix-card p{font-size:12px;color:var(--text-muted)}
+
+/* Author */
+.author-section{max-width:700px}
+.author-text{font-size:clamp(16px,2vw,18px);color:var(--text-secondary);line-height:1.9}
+.author-text strong{color:var(--text-primary);font-weight:700}
+.author-text .highlight{color:var(--accent-amber)}
+
+/* CTA Section */
+.cta-section{text-align:center;position:relative;overflow:hidden}
+.cta-section .concentric{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:.08}
+.cta-section .concentric circle{fill:none;stroke:var(--accent-amber);stroke-width:1;stroke-dasharray:6 5}
+.cta-text{font-size:clamp(16px,2vw,20px);color:var(--text-secondary);max-width:600px;margin:0 auto 40px;line-height:1.8}
+.cta-large{display:inline-flex;align-items:center;gap:14px;padding:20px 48px;background:var(--gradient-accent);border:none;border-radius:50px;color:#15101f;font-family:var(--font-heading);font-size:18px;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cta-large:hover{transform:scale(1.04);box-shadow:0 12px 40px rgba(255,167,38,.4)}
+.cta-large svg{width:20px;height:20px}
+.cta-secondary{margin-top:20px;font-size:14px;color:var(--text-tertiary)}
+.cta-secondary a{color:var(--accent-amber);text-decoration:none}
+.cta-secondary a:hover{text-decoration:underline}
+
+/* Footer */
+.footer{padding:60px 24px;border-top:1px solid var(--border-subtle);text-align:center;max-width:1400px;margin:0 auto}
+.footer-grid{display:flex;flex-direction:column;gap:24px;align-items:center;margin-bottom:32px}
+@media(min-width:768px){.footer-grid{flex-direction:row;justify-content:space-between;align-items:flex-start}}
+.footer-brand h4{font-family:var(--font-heading);font-size:16px;font-weight:700;margin-bottom:6px}
+.footer-brand p{font-size:13px;color:var(--text-muted)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.footer-links a{font-size:14px;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent-amber)}
+.footer-other{font-size:13px;color:var(--text-muted);line-height:1.8}
+.footer-copy{font-size:12px;color:var(--text-muted);margin-top:24px;opacity:.6}
+
+/* Back to top */
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--border-subtle);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;opacity:0;transform:translateY(20px);transition:all .3s;z-index:50}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:rgba(255,255,255,.15);color:var(--accent-amber)}
+
+/* Responsive text adjustments */
+@media(max-width:767px){
+  .hero{padding:60px 24px;min-height:auto}
+  .hero-title{font-size:42px}
+  .hero-subtitle{font-size:22px}
+  .section-title{font-size:32px}
+  .formula{font-size:28px}
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Grid background -->
+<svg class="grid-bg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs><pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse"><path d="M 72 0 L 0 0 0 72" fill="none" stroke="#fff" stroke-width="1"/></pattern></defs>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+</svg>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots" aria-label="Page sections">
+  <div class="nav-dot active" data-section="hero" title="Home"></div>
+  <div class="nav-dot" data-section="why" title="Why This Book"></div>
+  <div class="nav-dot" data-section="gen" title="5 Generations"></div>
+  <div class="nav-dot" data-section="formula" title="Core Formula"></div>
+  <div class="nav-dot" data-section="paradox" title="Triple Paradox"></div>
+  <div class="nav-dot" data-section="gallery" title="Visual Gallery"></div>
+  <div class="nav-dot" data-section="chapters" title="Chapter Map"></div>
+  <div class="nav-dot" data-section="author" title="Author"></div>
+  <div class="nav-dot" data-section="cta" title="Read Free"></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="section-label">OPEN SOURCE BOOK</div>
+      <h1 class="hero-title"><span class="gradient">智驾时代</span></h1>
+      <div class="hero-subtitle">Agent 进化简史</div>
+      <div class="hero-en">The Self-Driving Era</div>
+      <div class="hero-tagline">从 Prompt 到自进化 — 一部 Agent 的演化史诗</div>
+      <div class="hero-author">Yason · MindApex · VokoForge</div>
+      <a href="https://github.com/Madapexai/agent-evolution-book" class="cta-btn" target="_blank" rel="noopener">
+        免费开读 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-visual">
+      <img src="../assets/figures/fig_cover_car.svg" alt="Agent = 一辆会自己开的智能车" loading="eager">
+    </div>
+  </div>
+  <div class="scroll-indicator">SCROLL<div style="width:1px;height:24px;background:var(--text-muted);opacity:.4"></div></div>
+</section>
+
+<!-- ==================== WHY THIS BOOK ==================== -->
+<section id="why">
+  <div class="section-label">Why This Book</div>
+  <h2 class="section-title">为什么读这本书</h2>
+  <div class="accent-bar"></div>
+  <p class="section-subtitle">市面上讲 Agent 的书不少。这本不一样——因为它用开车的比喻讲，不是术语轰炸。</p>
+
+  <div class="bento-grid">
+    <div class="bento-card">
+      <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
+      <h3>不是又一本 AI 教科书</h3>
+      <p>受够了"颠覆性""范式转移""赋能"这些词？这本书把 Agent 比作一辆会自己开的智能车。你不需要先修一门机器学习课。</p>
+    </div>
+    <div class="bento-card">
+      <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+      <h3>18 章 + 3 附录</h3>
+      <p>从 Prompt 到 Auto-Organization，完整的 Agent 演化路径。挑你需要的读，跳你想跳的章。不需要从头啃到尾。</p>
+    </div>
+    <div class="bento-card">
+      <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10M12 2a15.3 15.3 0 00-4 10 15.3 15.3 0 004 10"/></svg></div>
+      <h3>中英双语</h3>
+      <p>中文为主，英文对照。关键术语双语标注。中文读不懂的地方可以切英文看。两边读者都能读。</p>
+    </div>
+    <div class="bento-card">
+      <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <h3>开源免费</h3>
+      <p>MIT 协议，GitHub 开源。没有付费墙，没有注册流程。直接打开就能读。读完觉得有用，给个 Star 就行。</p>
+    </div>
+    <div class="bento-card">
+      <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 00-16 0"/></svg></div>
+      <h3>写给谁看</h3>
+      <p>开发者、产品经理、创业者、对 AI 好奇的人。只要你用过 ChatGPT 或者任何 AI 工具，这本书就是写给你的。</p>
+    </div>
+    <div class="bento-card quote">
+      <p>"搞懂了，你就不慌了。"</p>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;font-style:normal">— 一位读完序章的读者</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5 GENERATIONS ==================== -->
+<section id="gen" class="gen-section">
+  <div class="section-label">Evolution</div>
+  <h2 class="section-title">五代演化</h2>
+  <div class="accent-bar"></div>
+  <p class="section-subtitle">从手摇启动到自进化车队——不是替代，而是层层叠加。就像现代汽车依然有方向盘和刹车。</p>
+
+  <div class="gen-cards">
+    <div class="gen-card">
+      <div class="gen-num">01</div>
+      <div class="gen-info">
+        <div class="gen-name">Prompt Engineering · 手摇启动</div>
+        <div class="gen-years">2022–2023</div>
+        <div class="gen-desc">你得亲自摇手柄。写一段提示词，AI 才动一下。你说一句它做一步，不催它就停在那。最早的汽车，每次启动都得下来摇半天。</div>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-num">02</div>
+      <div class="gen-info">
+        <div class="gen-name">Context Engineering · 装上导航</div>
+        <div class="gen-years">2023–2024</div>
+        <div class="gen-desc">给 AI 装了一张地图。它能看到项目文档、历史记录、相关资料，而不是凭空瞎猜。但方向盘还在你手里，它只是看得更清楚了。</div>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-num">03</div>
+      <div class="gen-info">
+        <div class="gen-name">Harness Engineering · 装上刹车和方向盘</div>
+        <div class="gen-years">2024–2025</div>
+        <div class="gen-desc">AI 开始真正做事了。能改代码、能跑命令、能发邮件。但能做事的同时也可能闯祸。于是 Harness 出现了：给它装刹车、装方向盘、装仪表盘。从"能做事"变成"能安全地做事"。</div>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-num">04</div>
+      <div class="gen-info">
+        <div class="gen-name">Loop Engineering · 自己会跑了</div>
+        <div class="gen-years">2025–2026</div>
+        <div class="gen-desc">最关键的跃迁。AI 做完一件事不再停下来等你——它自己发现任务、执行、验证、记录、进入下一轮。就像定速巡航加自动导航：你设定目的地，它自己开。</div>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-num">05</div>
+      <div class="gen-info">
+        <div class="gen-name">Auto-Organization · 组队进化</div>
+        <div class="gen-years">2026+</div>
+        <div class="gen-desc">一辆车跑得快，一支车队能运更多货。多个 Agent 分工协作：写代码的、做测试的、审查的。它们自动组队、自动协作，甚至演化出新的组织形态。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;text-align:center">
+    <img src="../assets/figures/fig_five_generations.svg" alt="Agent 五代演化高速路" style="max-width:100%;border-radius:var(--radius-lg);border:1px solid var(--border-subtle)" loading="lazy">
+  </div>
+</section>
+
+<!-- ==================== CORE FORMULA ==================== -->
+<section id="formula" class="formula-section">
+  <div class="section-label">The Core</div>
+  <h2 class="section-title">核心公式</h2>
+  <div class="accent-bar" style="margin:0 auto 32px"></div>
+
+  <div class="formula"><span class="eq">Agent = LLM + Harness</span></div>
+
+  <div class="traffic-lights">
+    <div class="traffic-card">
+      <div class="light">!</div>
+      <h3>没有 Harness 的 LLM</h3>
+      <p>一个装在罐子里的大脑。聪明，但什么也干不了。也正是因为什么也干不了，所以也闯不了祸。</p>
+    </div>
+    <div class="traffic-card">
+      <div class="light">?</div>
+      <h3>Harness 是什么</h3>
+      <p>方向盘、刹车、交规、导航。一整套让 AI 安全可靠干活的工程系统。大模型决定了能力上限，Harness 决定了安全下限。</p>
+    </div>
+    <div class="traffic-card">
+      <div class="light">V</div>
+      <h3>LLM + Harness = Agent</h3>
+      <p>大脑加上身体。能上路了。能自己读文件、写代码、跑测试、发邮件——而且在规则之内，不会乱来。</p>
+    </div>
+  </div>
+
+  <div class="formula-viz">
+    <img src="../assets/figures/fig_harness_5subs.svg" alt="Harness 五大子系统" loading="lazy">
+    <img src="../assets/figures/fig_harness_7layers.svg" alt="Harness 七层纵深架构" loading="lazy">
+  </div>
+</section>
+
+<!-- ==================== TRIPLE PARADOX ==================== -->
+<section id="paradox">
+  <div class="section-label">Deep Dive</div>
+  <h2 class="section-title">三重悖论</h2>
+  <div class="accent-bar"></div>
+  <p class="section-subtitle">Agent 越强，越要回答这三个"反过来"的问题。而且它们拆不开。</p>
+
+  <div class="paradox-grid">
+    <div class="paradox-card">
+      <div class="p-icon">1</div>
+      <h3>记忆悖论</h3>
+      <div class="p-tag">MEMORY PARADOX</div>
+      <p>记得越多不等于越聪明。信息塞太满，有用的那条反而不显眼。记忆要管理——存多久、怎么隔离、何时丢弃。业界现在拼的不是谁记得多，而是"谁忘得聪明"。</p>
+    </div>
+    <div class="paradox-card">
+      <div class="p-icon">2</div>
+      <h3>推理悖论</h3>
+      <div class="p-tag">REASONING PARADOX</div>
+      <p>我们用 Harness 这套脚手架补偿基础模型推理能力的不足。但脚手架越复杂，它自己制造的新故障就越多。补一个洞，可能在别处戳出三个洞。失败不是线性累加的——它是雪球式复合的。</p>
+    </div>
+    <div class="paradox-card">
+      <div class="p-icon">3</div>
+      <h3>进化悖论</h3>
+      <div class="p-tag">EVOLUTION PARADOX</div>
+      <p>让 Agent 自己改自己，不等于它会变好。自己评自己，分数只会越判越高——这叫退化循环。没有外部独立验证的进化，本质上是在一个越来越小的圈子里打转。</p>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;text-align:center">
+    <img src="../assets/figures/fig_triple_paradox.svg" alt="三重悖论：记忆、推理、进化" style="max-width:100%;border-radius:var(--radius-lg);border:1px solid var(--border-subtle)" loading="lazy">
+  </div>
+</section>
+
+<!-- ==================== VISUAL GALLERY ==================== -->
+<section id="gallery">
+  <div class="section-label">Visuals</div>
+  <h2 class="section-title">图解一览</h2>
+  <div class="accent-bar"></div>
+  <p class="section-subtitle">16 张矢量插画。不是 Mermaid 文本框图——是真正手绘风格的 SVG。点击任意一张可以放大查看。</p>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+</section>
+
+<!-- ==================== CHAPTER MAP ==================== -->
+<section id="chapters">
+  <div class="section-label">Contents</div>
+  <h2 class="section-title">全书地图</h2>
+  <div class="accent-bar"></div>
+  <p class="section-subtitle">18 章 + 3 附录，分四个部分。从看懂到拆透，从造一辆到组一队。</p>
+
+  <div class="chapter-grid">
+    <div class="chapter-part">
+      <div class="part-num">01</div>
+      <h3>演化史</h3>
+      <div class="part-en">How Agents Evolved</div>
+      <ul class="ch-list">
+        <li><span class="ch-num">00</span>序章：未来已来</li>
+        <li><span class="ch-num">01</span>Agent 是什么：一辆会自己开的智能车</li>
+        <li><span class="ch-num">02</span>Prompt 的黄金时代：手摇启动</li>
+        <li><span class="ch-num">03</span>Context 时代：给 AI 一张地图</li>
+      </ul>
+    </div>
+    <div class="chapter-part">
+      <div class="part-num">02</div>
+      <h3>架构详解</h3>
+      <div class="part-en">Inside the Agent</div>
+      <ul class="ch-list">
+        <li><span class="ch-num">04</span>Harness 时代：装上刹车和方向盘</li>
+        <li><span class="ch-num">05</span>大模型：Agent 的发动机</li>
+        <li><span class="ch-num">06</span>记忆系统：Agent 的海马体</li>
+        <li><span class="ch-num">07</span>上下文工程：不是越多越好</li>
+      </ul>
+    </div>
+    <div class="chapter-part">
+      <div class="part-num">03</div>
+      <h3>实战案例</h3>
+      <div class="part-en">Build Your Own</div>
+      <ul class="ch-list">
+        <li><span class="ch-num">08</span>工具与插件：让 Agent 长出手和脚</li>
+        <li><span class="ch-num">09</span>Harness 七层纵深设计</li>
+        <li><span class="ch-num">10</span>Sub-agent 团队：从单车到车队</li>
+        <li><span class="ch-num">11</span>可观测与可审计：行车记录仪</li>
+      </ul>
+    </div>
+    <div class="chapter-part">
+      <div class="part-num">04</div>
+      <h3>组织与进化</h3>
+      <div class="part-en">From Car to Fleet</div>
+      <ul class="ch-list">
+        <li><span class="ch-num">12</span>实战：AI 网页设计师</li>
+        <li><span class="ch-num">13</span>实战：内容运营双 Agent</li>
+        <li><span class="ch-num">14</span>实战：自动化测试 Agent</li>
+        <li><span class="ch-num">15</span>实战：Agent Mesh 智能团队</li>
+      </ul>
+    </div>
+    <div class="chapter-part">
+      <div class="part-num">05</div>
+      <h3>未来之路</h3>
+      <div class="part-en">The Road Ahead</div>
+      <ul class="ch-list">
+        <li><span class="ch-num">16</span>Loop 革命：当 Agent 学会自己跑</li>
+        <li><span class="ch-num">17</span>自进化：Agent 的成长之路</li>
+        <li><span class="ch-num">18</span>终章：你就是副驾</li>
+      </ul>
+    </div>
+    <div class="appendices">
+      <div class="appendix-card">
+        <h4>附录 A · 工具清单</h4>
+        <p>模型、框架、工具链、Prompt 模板选型表</p>
+      </div>
+      <div class="appendix-card">
+        <h4>附录 B · 学习路线图</h4>
+        <p>零基础到独立构建 Agent 的 12 周计划</p>
+      </div>
+      <div class="appendix-card">
+        <h4>附录 C · 术语表</h4>
+        <p>所有术语的通俗解释 + 自动驾驶比喻</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== AUTHOR ==================== -->
+<section id="author" class="author-section">
+  <div class="section-label">Author</div>
+  <h2 class="section-title">作者</h2>
+  <div class="accent-bar"></div>
+  <div class="author-text">
+    <p><strong>Yason</strong>。非典型程序员。Agent 团队架构师。</p>
+    <p style="margin-top:16px">过去管理团队，现在管理 Agent。</p>
+    <p style="margin-top:16px">写这本书的原因很简单：市面上的 Agent 内容，要么全是论文公式，要么全是概念炒作。<span class="highlight">没有一本是普通人能看懂的。</span></p>
+    <p style="margin-top:16px">所以他自己写了一本。用开车的比喻。所有人都能看懂。</p>
+    <p style="margin-top:24px;font-size:14px;color:var(--text-muted)">博客：blogs.yason.click</p>
+  </div>
+</section>
+
+<!-- ==================== READ FREE CTA ==================== -->
+<section id="cta" class="cta-section">
+  <svg class="concentric" width="600" height="600" viewBox="0 0 600 600">
+    <circle cx="300" cy="300" r="280"/>
+    <circle cx="300" cy="300" r="200"/>
+    <circle cx="300" cy="300" r="120"/>
+    <circle cx="300" cy="300" r="50"/>
+  </svg>
+
+  <div class="section-label">Get It</div>
+  <h2 class="section-title">免费开读</h2>
+  <div class="accent-bar" style="margin:0 auto 32px"></div>
+  <p class="cta-text">这本书开源于 GitHub，MIT 协议。<br>没有付费墙。没有注册流程。<br>直接开始读。</p>
+  <a href="https://github.com/Madapexai/agent-evolution-book" class="cta-large" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    在 GitHub 上阅读
+  </a>
+  <div class="cta-secondary">
+    或者访问 <a href="https://github.com/Madapexai/agent-evolution-book" target="_blank" rel="noopener">github.com/Madapexai/agent-evolution-book</a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>智驾时代：Agent 进化简史</h4>
+      <p>The Self-Driving Era · MIT License</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/Madapexai/agent-evolution-book" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Madapexai/agent-evolution-book/discussions" target="_blank" rel="noopener">Discussions</a>
+      <a href="#">博客</a>
+    </div>
+    <div class="footer-other">
+      同系列：<br>
+      《给 AI 当老板：Agent 作战团队》<br>
+      《别调 Prompt 了，去写 Loop》
+    </div>
+  </div>
+  <div class="footer-copy">(C) 2026 Yason · MindApex · VokoForge. 从 Prompt 到自进化组织，一部 AI 智能体的演化史诗。</div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" aria-label="Back to top">&uarr;</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  // === Font loading check ===
+  document.documentElement.classList.add('fonts-loading');
+  document.fonts.ready.then(function(){document.documentElement.classList.remove('fonts-loading');});
+
+  // === Register GSAP ScrollTrigger ===
+  gsap.registerPlugin(ScrollTrigger);
+
+  // === Gallery data ===
+  var figures = [
+    {file:'fig_cover_car.svg',num:'01',title:'Agent = 智能车',ch:'第1章'},
+    {file:'fig_five_generations.svg',num:'02',title:'五代演化高速路',ch:'第1章'},
+    {file:'fig_chatbot_vs_agent.svg',num:'03',title:'Chatbot vs Agent',ch:'第1章'},
+    {file:'fig_agent_loop.svg',num:'04',title:'Agent Loop',ch:'第4章'},
+    {file:'fig_react.svg',num:'05',title:'ReAct 模式',ch:'第5章'},
+    {file:'fig_context_funnel.svg',num:'06',title:'上下文漏斗',ch:'第7章'},
+    {file:'fig_harness_5subs.svg',num:'07',title:'Harness 五子系统',ch:'第4章'},
+    {file:'fig_harness_7layers.svg',num:'08',title:'Harness 七层架构',ch:'第9章'},
+    {file:'fig_triple_paradox.svg',num:'09',title:'三重悖论',ch:'第18章'},
+    {file:'fig_arch_system.svg',num:'10',title:'Agent 系统架构',ch:'第4章'},
+    {file:'fig_arch_toolcall.svg',num:'11',title:'工具调用架构 MCP',ch:'第8章'},
+    {file:'fig_arch_multagent.svg',num:'12',title:'多智能体编排',ch:'第10章'},
+    {file:'fig_flow_task.svg',num:'13',title:'任务执行流程',ch:'第4章'},
+    {file:'fig_flow_context_pipeline.svg',num:'14',title:'上下文流水线',ch:'第7章'},
+    {file:'fig_flow_verification.svg',num:'15',title:'验证流水线',ch:'第9章'},
+    {file:'fig_auto_org.svg',num:'16',title:'Auto-Organization',ch:'第1章'}
+  ];
+
+  // === Populate Gallery ===
+  var grid = document.getElementById('galleryGrid');
+  figures.forEach(function(f){
+    var item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = '<img src="../assets/figures/'+f.file+'" alt="'+f.title+'" loading="lazy"><div class="fig-label">Fig.'+f.num+' · '+f.title+' · '+f.ch+'</div>';
+    item.addEventListener('click',function(){
+      openLightbox('../assets/figures/'+f.file);
+    });
+    grid.appendChild(item);
+  });
+
+  // === Lightbox ===
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxClose = document.getElementById('lightboxClose');
+  function openLightbox(src){
+    lightboxImg.src = src;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+  lightbox.addEventListener('click',function(e){if(e.target===lightbox)closeLightbox()});
+  lightboxClose.addEventListener('click',closeLightbox);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+
+  // === Back to top ===
+  var backTop = document.getElementById('backTop');
+  backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  window.addEventListener('scroll',function(){
+    backTop.classList.toggle('visible', window.scrollY > 600);
+  });
+
+  // === Navigation dots ===
+  var dots = document.querySelectorAll('.nav-dot');
+  var sections = ['hero','why','gen','formula','paradox','gallery','chapters','author','cta'];
+  dots.forEach(function(dot){
+    dot.addEventListener('click',function(){
+      var sec = this.dataset.section;
+      var el = document.getElementById(sec);
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  // === GSAP Animations ===
+  // Hero title chars stagger
+  var heroTitle = document.querySelector('.hero-title');
+  if(heroTitle){
+    var text = heroTitle.textContent;
+    heroTitle.innerHTML = '';
+    text.split('').forEach(function(ch){
+      var span = document.createElement('span');
+      span.textContent = ch;
+      span.style.display = 'inline-block';
+      heroTitle.appendChild(span);
+    });
+    gsap.from('.hero-title span',{opacity:0,y:60,duration:.8,stagger:.04,ease:'power3.out',delay:.3,onComplete:function(){gsap.set('.hero-title span',{opacity:1})}});
+  }
+
+  // Hero other elements
+  gsap.from('.hero-subtitle',{opacity:0,y:30,duration:.8,delay:.6,ease:'power3.out'});
+  gsap.from('.hero-en',{opacity:0,y:20,duration:.7,delay:.8,ease:'power3.out'});
+  gsap.from('.hero-tagline',{opacity:0,y:20,duration:.7,delay:1,ease:'power3.out'});
+  gsap.from('.hero-author',{opacity:0,y:20,duration:.7,delay:1.1,ease:'power3.out'});
+  gsap.from('.cta-btn',{opacity:0,y:20,duration:.7,delay:1.2,ease:'power3.out'});
+  gsap.from('.hero-visual',{opacity:0,x:80,duration:1,delay:.5,ease:'power3.out'});
+
+  // Why This Book cards
+  gsap.from('.bento-card',{
+    scrollTrigger:{trigger:'#why',start:'top 75%'},
+    opacity:0,y:50,duration:.7,stagger:.1,ease:'power3.out'
+  });
+
+  // 5 Gen cards
+  gsap.from('.gen-card',{
+    scrollTrigger:{trigger:'#gen',start:'top 70%'},
+    opacity:0,x:-40,duration:.7,stagger:.12,ease:'power3.out'
+  });
+
+  // Formula
+  gsap.from('.formula',{
+    scrollTrigger:{trigger:'#formula',start:'top 70%'},
+    opacity:0,scale:.9,duration:.8,ease:'power3.out'
+  });
+  gsap.from('.traffic-card',{
+    scrollTrigger:{trigger:'#formula',start:'top 60%'},
+    opacity:0,y:40,duration:.6,stagger:.15,ease:'power3.out'
+  });
+  gsap.from('.formula-viz img',{
+    scrollTrigger:{trigger:'#formula',start:'top 50%'},
+    opacity:0,y:30,duration:.7,stagger:.1,ease:'power3.out'
+  });
+
+  // Paradox cards
+  gsap.from('.paradox-card',{
+    scrollTrigger:{trigger:'#paradox',start:'top 70%'},
+    opacity:0,y:50,rotation:2,duration:.7,stagger:.15,ease:'power3.out'
+  });
+
+  // Gallery
+  gsap.from('.gallery-item',{
+    scrollTrigger:{trigger:'#gallery',start:'top 85%'},
+    opacity:0,y:30,duration:.5,stagger:.05,ease:'power3.out'
+  });
+
+  // Chapter map
+  gsap.from('.chapter-part',{
+    scrollTrigger:{trigger:'#chapters',start:'top 75%'},
+    opacity:0,y:40,duration:.7,stagger:.1,ease:'power3.out'
+  });
+
+  // Author
+  gsap.from('.author-text p',{
+    scrollTrigger:{trigger:'#author',start:'top 85%'},
+    opacity:0,y:20,duration:.6,stagger:.12,ease:'power3.out'
+  });
+
+  // CTA concentric circles
+  gsap.from('.cta-section .concentric circle',{
+    scrollTrigger:{trigger:'#cta',start:'top 80%'},
+    opacity:0,scale:.5,duration:1,stagger:.15,ease:'power3.out'
+  });
+
+  // Nav dot scroll spy
+  window.addEventListener('scroll',function(){
+    var scrollPos = window.scrollY + window.innerHeight/3;
+    sections.forEach(function(sec,i){
+      var el = document.getElementById(sec);
+      if(!el) return;
+      var top = el.offsetTop;
+      var bottom = top + el.offsetHeight;
+      if(scrollPos >= top && scrollPos < bottom){
+        dots.forEach(function(d){d.classList.remove('active')});
+        if(dots[i]) dots[i].classList.add('active');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
